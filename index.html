@@ -1,249 +1,669 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScriptBlox - Визуальная копия</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Script RB - Updated Roblox Scripts</title>
+    <!-- Connecting Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* CSS variables for easy color management */
+        :root {
+            --bg-dark: #12141D;
+            --bg-medium: #1A1B26;
+            --bg-light: #24283B;
+            --primary-blue: #4A54E2;
+            --text-light: #E0E0E0;
+            --text-medium: #8A93B3;
+            --text-dark: #c0c5d5;
+            --border-radius: 12px;
+            --red-like: #e53935;
+            --green-success: #4CAF50;
+        }
+
+        /* Basic styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
+            background-color: var(--bg-medium);
+            color: var(--text-dark);
             font-family: 'Inter', sans-serif;
-            background-color: #12121c;
-            color: #e0e0e0;
+            line-height: 1.6;
         }
-        .bg-card { background-color: #1e1e2d; }
-        .bg-header { background-color: #1a1a2a; }
-        .border-accent { border-color: #3c3c5a; }
-        .text-accent { color: #a970ff; }
-        .btn-primary {
-            background-color: #6d28d9;
-            transition: background-color 0.3s;
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
         }
-        .btn-primary:hover {
-            background-color: #5b21b6;
+
+        /* Navigation bar */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+            background-color: var(--bg-medium);
+            border-bottom: 1px solid var(--bg-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
-        .btn-secondary {
-            background-color: transparent;
-            border: 1px solid #6d28d9;
-            color: #a970ff;
-            transition: background-color 0.3s, color 0.3s;
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-        .btn-secondary:hover {
-            background-color: #6d28d9;
-            color: white;
+
+        .logo svg {
+            fill: var(--primary-blue);
         }
-        .btn-green {
-            background-color: #10b981;
-            transition: background-color 0.3s;
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2.5rem;
         }
-        .btn-green:hover {
-            background-color: #059669;
+
+        nav a {
+            text-decoration: none;
+            color: var(--text-medium);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
         }
-        .icon-action {
+
+        nav a:hover, nav a.active {
+            color: var(--text-light);
+        }
+
+        .search-bar {
+            display: flex;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--bg-light);
+        }
+
+        .search-bar input {
+            background-color: var(--bg-light);
+            border: none;
+            padding: 0.75rem 1rem;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            width: 250px;
+        }
+        .search-bar input::placeholder {
+            color: var(--text-medium);
+        }
+        .search-bar input:focus {
+            outline: none;
+            background-color: #2a2f44;
+        }
+
+        .search-bar button {
+            background-color: var(--primary-blue);
+            border: none;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: background-color 0.3s ease;
+        }
+        .search-bar button:hover {
+            background-color: #5a64f2;
+        }
+        .search-bar svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* Main content */
+        main {
+            padding: 3rem 0;
+        }
+
+        /* Hero banner with background image */
+        .hero-banner {
+            position: relative;
+            padding: 6rem 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background-image: url('https://cdn.gamestatic.net/files/editor_uploads/NikolayD/2025/skript-dlya-roblox-99-nights-in-the-forest_1.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+            border: 1px solid var(--bg-light);
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(18, 20, 29, 0.75);
+            z-index: 1;
+        }
+
+        .hero-banner .script-info {
+            position: relative;
+            z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-            color: #8b949e;
-            cursor: pointer;
-            transition: color 0.3s;
         }
-        .icon-action:hover {
-            color: #e0e0e0;
+        
+        .script-info h1 {
+            font-size: 2.5rem;
+            color: var(--text-light);
+            margin: 0.5rem 0 1rem;
+            line-height: 1.2;
+        }
+        
+        .script-info p {
+            color: var(--text-medium);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+        }
+
+        .script-tag {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            padding: 0.3rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            border-radius: 6px;
+            text-transform: uppercase;
+            display: inline-block;
+        }
+
+        .script-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-medium);
+            font-size: 0.9rem;
+            justify-content: center;
+        }
+        .script-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .script-meta svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .script-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .script-actions .action-button {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .script-actions .action-button:hover {
+            background-color: #5a64f2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(74, 84, 226, 0.3);
+        }
+
+        .script-actions .icon-button {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        .icon-button svg {
+            width: 20px;
+            height: 20px;
+        }
+        .icon-button:hover {
+            background-color: #313752;
+            color: var(--text-light);
+        }
+        .icon-button.liked svg {
+            color: var(--red-like);
+        }
+
+
+        /* Other scripts section */
+        .other-scripts h2 {
+            color: var(--text-light);
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--primary-blue);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .scripts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .script-card {
+            background-color: var(--bg-dark);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--bg-light);
+        }
+        .script-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .script-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .card-content {
+            padding: 1.5rem;
+        }
+        .card-content h3 {
+            font-size: 1.25rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        .card-content p {
+            color: var(--text-medium);
+            font-size: 0.9rem;
+        }
+
+        /* Modal window */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-content {
+            background-color: var(--bg-light);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+        .modal-icon {
+            color: var(--green-success);
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+        }
+        .modal-content h3 {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+        .modal-content p {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+        .modal-btn {
+            background-color: var(--primary-blue);
+            color: var(--text-light);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            font-size: 1rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 48px;
+        }
+        .modal-btn:hover {
+             background-color: #5a64f2;
+        }
+        .modal-btn:last-child {
+            margin-bottom: 0;
+        }
+        .modal-btn.load-btn {
+            background-color: #313752; /* Disabled color */
+            cursor: not-allowed;
+        }
+        .modal-btn.load-btn.active {
+            background-color: var(--green-success);
+            cursor: pointer;
+        }
+        .modal-btn.load-btn.active:hover {
+            background-color: #45a049;
+        }
+
+        /* Toast Notification */
+        .toast-notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--green-success);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            z-index: 2000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: top 0.5s ease-in-out;
+        }
+        .toast-notification.show {
+            top: 20px;
+        }
+
+        /* Loader Animation */
+        .loader {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+            header { flex-direction: column; gap: 1.5rem; position: static; }
+            nav ul { gap: 1.5rem; }
+            main { padding: 1.5rem 0; }
+            .hero-banner { padding: 4rem 1rem; }
+        }
+        
+        @media (max-width: 480px) {
+            nav ul { flex-wrap: wrap; justify-content: center; }
+            .search-bar { width: 100%; }
+            .search-bar input { width: 100%; }
+            .script-info h1 { font-size: 2rem; }
+            .script-actions { flex-direction: column; width: 100%; }
         }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
 
-    <!-- Header -->
-    <header class="bg-header border-b border-accent shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-2xl font-bold text-white">
-                <i class="fa-solid fa-cube text-purple-400"></i>
-                ScriptBlox
-            </h1>
-            <div class="hidden md:flex items-center space-x-4">
-                <button class="px-4 py-2 text-sm font-medium rounded-md text-white">Login</button>
-                <button class="btn-primary px-4 py-2 text-sm font-medium rounded-md text-white">Sign Up</button>
+    <div class="container">
+        <!-- Navigation bar -->
+        <header>
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M21.698 10.633l-2.193-2.125.01-3.64-3.535-.106-2.04-2.22-3.003 1.25-1.954-2.29-3.443.343.109 3.636-2.12 2.13L2 12l2.367 1.367 2.12 2.13-.109 3.636 3.443.343 1.954-2.29 3.003 1.25 2.04 2.22 3.535-.106-.01-3.64 2.193-2.125L22 12l-2.302-1.367zM12 16c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4z"></path></svg>
+                Script RB
             </div>
-            <div class="md:hidden">
-                <button class="text-white text-2xl">
-                    <i class="fa-solid fa-bars"></i>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Exploits</a></li>
+                    <li><a href="#">Tools</a></li>
+                </ul>
+            </nav>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search for scripts...">
+                <button id="searchButton">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
                 </button>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- Main Content -->
-    <main class="container mx-auto p-4 max-w-4xl">
-        <div class="space-y-4">
-            
-            <!-- Hero Image Section -->
-            <div class="relative rounded-lg overflow-hidden border border-accent">
-                <img src="https://i.ytimg.com/vi/Ld3A0RvuPx0/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDedcEF8zbDemkLxHoUA57r2pmsbw" alt="Game Banner" class="w-full h-auto object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                <div class="absolute top-4 left-4 flex items-center space-x-4">
-                    <span class="bg-black/50 text-white text-sm px-3 py-1 rounded-full flex items-center">
-                        <i class="fa-solid fa-eye mr-2"></i> 36.9k Views
-                    </span>
-                </div>
-                <div class="absolute bottom-4 left-4 w-11/12 md:w-3/5 bg-black/60 backdrop-blur-sm px-5 py-4 rounded-lg border-accent">
-                    <h3 class="text-2xl font-bold text-white mb-2">Steal a Brainrot Script</h3>
-                    <div class="flex items-center space-x-4 text-lg">
-                        <span class="font-semibold bg-gradient-to-r from-red-500 to-orange-400 bg-clip-text text-transparent">Insta steal</span>
-                        <span class="text-gray-500">•</span>
-                        <span class="font-semibold bg-gradient-to-r from-red-500 to-orange-400 bg-clip-text text-transparent">Invisible steal</span>
-                        <span class="text-gray-500">•</span>
-                        <span class="font-semibold bg-gradient-to-r from-red-500 to-orange-400 bg-clip-text text-transparent">Teleport</span>
+        <!-- Main content -->
+        <main>
+            <!-- Hero banner section -->
+            <section class="hero-banner">
+                <div class="script-info">
+                    <span class="script-tag">Popular Script</span>
+                    <h1>99 Nights in the Forest</h1>
+                    <p>A great script for 99 Nights in the Forest with features like Kill Aura, Auto Farm Tree, Auto Fill Hunger, and much more.</p>
+                    <div class="script-meta">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path></svg>
+                            90.2K
+                        </span>
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"></path></svg>
+                            17/10/2025
+                        </span>
+                    </div>
+                    <div class="script-actions">
+                        <button class="action-button" id="getScriptBtn">Get Script</button>
+                        <button class="icon-button" aria-label="Like" id="likeBtn">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+                        </button>
+                        <button class="icon-button" aria-label="Share">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"></path></svg>
+                        </button>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Script Info Card -->
-            <div class="bg-card border border-accent rounded-lg p-6">
-                <h2 class="text-3xl font-bold text-white mb-2">
-                    Steal a Brainrot Script
-                </h2>
-                <p class="mb-4 text-xl font-bold text-accent flex items-center">
-                    <i class="fa-solid fa-brain mr-2"></i> Steal a Brainrot
-                </p>
-                
-
-                <div class="mb-6">
-                    <button id="getScriptBtn" class="btn-primary w-full py-3 rounded-md font-semibold text-lg"><i class="fa-solid fa-download mr-2"></i>Get script</button>
-                </div>
-                
-                <div class="border-t border-b border-accent py-4 flex justify-around items-center">
-                    <div class="icon-action">
-                        <i class="fa-regular fa-thumbs-up text-2xl"></i>
-                        <span class="text-sm mt-1">1200</span>
+            <!-- Other scripts section -->
+            <section class="other-scripts">
+                <h2>Other Scripts</h2>
+                <div class="scripts-grid">
+                    <div class="script-card">
+                        <img src="https://i.ytimg.com/vi/NtEc9AbIPjQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA6oHHL9n2Qx_f47NbSRYKWL9aKJg" alt="Still a Brainrot Scrip">
+                        <div class="card-content">
+                            <h3>Still a Brainrot Scrip</h3>
+                            <p>Lose your last brain cells with this ultimate brainrot script, packed with features.</p>
+                        </div>
                     </div>
-                    <div class="icon-action">
-                        <i class="fa-regular fa-thumbs-down text-2xl"></i>
-                        <span class="text-sm mt-1">0</span>
+                    <div class="script-card">
+                        <img src="https://i.ytimg.com/vi/cdACrNrVYqc/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDo32JeoKom9V6FRyQzFAj3BS8aCQ" alt="Plants vs Brainrots! Script">
+                        <div class="card-content">
+                            <h3>Plants vs Brainrots!</h3>
+                            <p>Defend your garden from the brainrot invasion with this powerful script.</p>
+                        </div>
                     </div>
-                    <div class="icon-action">
-                        <i class="fa-regular fa-star text-2xl"></i>
-                        <span class="text-sm mt-1">Favorite</span>
+                     <div class="script-card">
+                        <img src="https://deltaexecutorapp.com/wp-content/uploads/2025/03/Fisch-Script-1024x576.jpg" alt="Fish it Script">
+                        <div class="card-content">
+                            <h3>Fish it</h3>
+                            <p>Catch all the fish you want with this powerful auto-fish script.</p>
+                        </div>
+                    </div>
+                    <div class="script-card">
+                        <img src="https://scriptrb.com/cdn-cgi/image/medium-low,format=auto,height=420/https://scriptrb.com/img/uploads/68f35b90e492f_112513964134184795689.webp" alt="99 Nights in the Forest Script">
+                        <div class="card-content">
+                            <h3>99 Nights in the Forest</h3>
+                            <p>This script for 99 Nights in the Forest has Auto Days for fast AFK progress, God Mode for full invincibility, plus Chop & Aura and more OP features.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            
+            </section>
+        </main>
+    </div>
 
-            <!-- Description Card -->
-            <div class="bg-card border border-accent rounded-lg p-6">
-                <h3 class="text-2xl font-bold text-white mb-4 border-b border-accent pb-2">Description</h3>
-                <div class="prose prose-invert text-gray-300 space-y-3">
-                    <p><strong>Steal a Brainrot Script</strong></p>
-                    <ul>
-                        <li><span class="font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Insta steal</span></li>
-                        <li><span class="font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Invisible steal</span></li>
-                        <li><span class="font-bold bg-gradient-to-r from-red-500 to-orange-500 bg-clip-text text-transparent">Teleport</span></li>
-                    </ul>
-                    <p>✨ **Automation**</p>
-                    <ul>
-                        <li>Auto place brainrot</li>
-                        <li>Auto buy brainrot</li>
-                        <li>Auto sell items</li>
-                    </ul>
-                    <p>👁️ **ESP**</p>
-                    <ul>
-                        <li>Brainrot ESP</li>
-                        <li>Player/name ESP</li>
-                        <li>Walking tracers</li>
-                        <li>Show affordable</li>
-                        <li>Anti invisible</li>
-                    </ul>
-                    <p>🔔 **Webhook Alerts**</p>
-                     <ul>
-                        <li>Spawn alerts</li>
-                        <li>Buy alerts</li>
-                        <li>Brainrot attack notifier / auto server hop (premium only)</li>
-                    </ul>
-                    <p>❓ **Misc**</p>
-                    <ul>
-                        <li>Expensive brainrot sniper / best brainrot viewer</li>
-                        <li>Auto rejoin</li>
-                        <li>Server hop</li>
-                        <li>Anti AFK</li>
-                        <li>Config save/load</li>
-                    </ul>
-                </div>
-                <div class="flex items-center justify-end space-x-4 mt-6 border-t border-accent pt-4">
-                     <button class="text-gray-400 hover:text-white font-medium">Show less</button>
-                     <button class="btn-primary px-5 py-2 rounded-md font-semibold">Show changelog</button>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <!-- Modal -->
-    <div id="scriptModal" class="fixed inset-0 bg-black bg-opacity-75 hidden flex items-center justify-center z-50 transition-opacity duration-300">
-        <div class="bg-card border border-accent rounded-lg p-8 max-w-sm w-full text-center relative shadow-2xl transform transition-all scale-95">
-            <button id="closeModal" class="absolute top-2 right-3 text-gray-400 hover:text-white text-3xl font-light">&times;</button>
-            <div class="text-green-400 text-5xl mb-4">
-                <i class="fa-solid fa-check-circle"></i>
-            </div>
-            <h3 class="text-2xl font-bold text-white mb-2">Success!</h3>
-            <p class="text-gray-300">You are about to get your script.</p>
+    <!-- Modal window -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content" id="modalContent">
+            <!-- Content is generated by JavaScript -->
         </div>
     </div>
 
     <script>
-        const getScriptButton = document.getElementById('getScriptBtn');
-        const scriptModal = document.getElementById('scriptModal');
-        const closeModalButton = document.getElementById('closeModal');
-        const modalContent = scriptModal.querySelector('div');
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Elements ---
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            const getScriptBtn = document.getElementById('getScriptBtn');
+            const searchButton = document.getElementById('searchButton');
+            const searchInput = document.getElementById('searchInput');
+            const likeBtn = document.getElementById('likeBtn');
 
-        const openModal = () => {
-            scriptModal.classList.remove('hidden');
-            setTimeout(() => {
-                scriptModal.classList.remove('opacity-0');
-                modalContent.classList.remove('scale-95');
-            }, 10); 
-        };
+            // --- Like Button Functionality ---
+            likeBtn.addEventListener('click', () => {
+                likeBtn.classList.toggle('liked');
+            });
 
-        const closeModal = () => {
-            scriptModal.classList.add('opacity-0');
-            modalContent.classList.add('scale-95');
-            setTimeout(() => {
-                scriptModal.classList.add('hidden');
-            }, 300);
-        };
+            // --- Toast Notification Function ---
+            function showToast(message) {
+                // Remove any existing toasts
+                const existingToast = document.querySelector('.toast-notification');
+                if (existingToast) {
+                    existingToast.remove();
+                }
 
-        getScriptButton.addEventListener('click', openModal);
-        closeModalButton.addEventListener('click', closeModal);
+                const toast = document.createElement('div');
+                toast.className = 'toast-notification';
+                toast.textContent = message;
+                document.body.appendChild(toast);
 
-        scriptModal.addEventListener('click', (e) => {
-            if (e.target === scriptModal) {
-                closeModal();
+                // Trigger the show animation
+                setTimeout(() => {
+                    toast.classList.add('show');
+                }, 10);
+
+                // Hide and remove after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    toast.addEventListener('transitionend', () => {
+                        if (toast.parentElement) {
+                            toast.remove();
+                        }
+                    });
+                }, 3000);
             }
+
+            // --- Modal Functions ---
+            function closeModal() {
+                modal.classList.remove('visible');
+            }
+
+            function showMessageModal(title, text) {
+                let iconHtml = '';
+                if (title.toLowerCase() === 'success!') {
+                    iconHtml = `
+                        <svg class="modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M0 0h24v24H0z" fill="none"/>
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+                        </svg>
+                    `;
+                }
+                modalContent.innerHTML = `
+                    ${iconHtml}
+                    <h3>${title}</h3>
+                    <p>${text}</p>
+                    <button class="modal-btn" id="modalCloseBtn">Got it</button>
+                `;
+                modal.classList.add('visible');
+                document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+            }
+
+            function showGetScriptModal() {
+                modalContent.innerHTML = `
+                    <h3>Get The Script</h3>
+                    <p>Copy the script and load it into the game.</p>
+                    <button class="modal-btn" id="copyScriptBtn">Copy Script</button>
+                    <button class="modal-btn load-btn" id="loadIntoGameBtn">Load into the game</button>
+                `;
+                modal.classList.add('visible');
+
+                const copyBtn = document.getElementById('copyScriptBtn');
+                const loadBtn = document.getElementById('loadIntoGameBtn');
+
+                copyBtn.addEventListener('click', () => {
+                    const scriptContent = "loadstring(game:HttpGet('https://your-script-url.com/script.lua'))()";
+                    const textArea = document.createElement('textarea');
+                    textArea.value = scriptContent;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    try {
+                        document.execCommand('copy');
+                        showToast('Successful');
+                        loadBtn.classList.add('active'); // Activate the load button
+                    } catch (err) {
+                        showToast('Error copying!');
+                    }
+                    document.body.removeChild(textArea);
+                });
+
+                loadBtn.addEventListener('click', () => {
+                    if (!loadBtn.classList.contains('active')) return;
+
+                    loadBtn.innerHTML = '<div class="loader"></div>';
+                    loadBtn.disabled = true;
+
+                    setTimeout(() => {
+                        showMessageModal('Success!', 'Script loaded into the game.');
+                    }, 2000);
+                });
+            }
+
+            // --- Event Listeners ---
+            getScriptBtn.addEventListener('click', showGetScriptModal);
+            
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            const handleSearch = () => {
+                 const query = searchInput.value.trim();
+                if (query) {
+                    showMessageModal('Searching', `Searching for: "${query}".`);
+                } else {
+                    showMessageModal('Error', 'Please enter a search query.');
+                }
+            }
+            
+            searchButton.addEventListener('click', handleSearch);
+            searchInput.addEventListener('keypress', (event) => {
+                 if (event.key === 'Enter') {
+                    handleSearch();
+                 }
+            });
         });
     </script>
-
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
